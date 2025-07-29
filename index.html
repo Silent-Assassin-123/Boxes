@@ -69,10 +69,10 @@
 
     .container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+      grid-template-columns: repeat(10, 1fr);
       gap: 10px;
       width: 100%;
-      max-width: 600px;
+      max-width: 700px;
     }
 
     .box {
@@ -155,7 +155,6 @@
       sound.play();
     }
 
-    // Create boxes
     for (let i = 1; i <= TOTAL; i++) {
       const box = document.createElement("div");
       box.classList.add("box");
@@ -175,10 +174,8 @@
       container.appendChild(box);
     }
 
-    // Update initial counter
     updateCounter(boxState.length);
 
-    // Toggle All
     toggleAllBtn.addEventListener("click", () => {
       allToggled = !allToggled;
       boxElements.forEach(box => box.classList.toggle("open", allToggled));
@@ -186,7 +183,6 @@
       updateStorage();
     });
 
-    // Reset All
     resetBtn.addEventListener("click", () => {
       boxElements.forEach(box => box.classList.remove("open"));
       allToggled = false;
