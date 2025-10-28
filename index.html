@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Toggle Boxes for class 8C</title>
-<style>
+  <style>
     :root {
       --bg-color: #ffffff;
       --text-color: #d10000;
@@ -86,20 +86,6 @@
       box-shadow: 0 0 25px #ff6666;
     }
 
-    button:disabled {
-      background: #ccc;
-      color: #888;
-      box-shadow: none;
-      cursor: not-allowed;
-    }
-
-    .status {
-      margin-top: 20px;
-      font-size: 1.5em;
-      color: var(--text-color);
-      text-shadow: 0 0 10px #ff6666;
-    }
-
     .footer {
       margin-top: 60px;
       font-size: 1.2em;
@@ -119,13 +105,15 @@
   <div class="controls">
     <button id="toggleAllBtn">Toggle All</button>
     <button id="resetBtn">Reset All</button>
+    <button id="modeBtn">Dark Mode</button>
   </div>
 
-  <div class="container" id="boxes-container"></div>
+  <div class="grid" id="boxes-container"></div>
+
+  <div class="footer">Made by Anirudh 8C</div>
 
   <audio id="toggle-sound" preload="auto">
     <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_f90c1b881e.mp3?filename=switch-click-110899.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
   </audio>
 
   <script>
@@ -133,9 +121,10 @@
     const sound = document.getElementById('toggle-sound');
     const toggleAllBtn = document.getElementById('toggleAllBtn');
     const resetBtn = document.getElementById('resetBtn');
+    const modeBtn = document.getElementById('modeBtn');
     const counter = document.getElementById('boxCounter');
-
     const TOTAL = 100;
+
     let allToggled = false;
     const boxState = JSON.parse(localStorage.getItem('openBoxes') || '[]');
     const boxElements = [];
@@ -143,9 +132,7 @@
     function updateStorage() {
       const open = [];
       boxElements.forEach((box, i) => {
-        if (box.classList.contains("open")) {
-          open.push(i + 1);
-        }
+        if (box.classList.contains("open")) open.push(i + 1);
       });
       localStorage.setItem('openBoxes', JSON.stringify(open));
       updateCounter(open.length);
@@ -162,12 +149,10 @@
 
     for (let i = 1; i <= TOTAL; i++) {
       const box = document.createElement("div");
-      box.classList.add("box");
+      box.classList.add("locker");
       box.textContent = i;
 
-      if (boxState.includes(i)) {
-        box.classList.add("open");
-      }
+      if (boxState.includes(i)) box.classList.add("open");
 
       box.addEventListener("click", () => {
         box.classList.toggle("open");
@@ -193,6 +178,11 @@
       allToggled = false;
       playSound();
       updateStorage();
+    });
+
+    modeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      modeBtn.textContent = document.body.classList.contains("dark") ? "Light Mode" : "Dark Mode";
     });
   </script>
 
